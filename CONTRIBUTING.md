@@ -28,12 +28,16 @@ Examples: `feat/12-claim-endpoint`, `fix/31-decay-rounding`, `docs/4-pow-spec`.
 Use [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```text
-<type>(<scope>): <imperative summary, lower case, no trailing period>
+<type>(<scope>): <description>
 ```
 
 | Types | `feat`, `fix`, `perf`, `refactor`, `test`, `docs`, `build`, `ci`, `chore`, `revert` |
 |-------|----------------------------------------------------------------------------------------|
 | Scopes | `backend`, `frontend`, `protocol`, `ci`, `docs`, `agents`, `deps`                          |
+
+The description starts with an action verb in the imperative (`add`, `fix`, `remove`, ...), is
+lower case, has no trailing period and is at most 72 characters. Example:
+`feat(backend): add route to get current map`.
 
 Breaking changes use `!` (`feat(protocol)!: bind proofs to cell generation`) and a
 `BREAKING CHANGE:` footer. AI-authored commits keep the tool's `Co-authored-by` trailer.

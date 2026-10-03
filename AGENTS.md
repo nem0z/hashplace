@@ -73,6 +73,31 @@ Run the checks for every area you touched before opening or updating a PR.
 | Backend  | `cd backend && gofmt -l . && go vet ./... && golangci-lint run && go test -race ./...`    |
 | Frontend | `cd frontend && npm ci && npm run lint && npm run typecheck && npm test && npm run build` |
 
+## Commit messages
+
+Every commit (and every PR title) follows this format:
+
+```text
+<type>(<scope>): <description>
+```
+
+- **type**: `feat`, `fix`, `test`, `docs`, `chore`, `refactor`, `perf`, `build`, `ci`, `revert`.
+- **scope** (the context): `backend`, `frontend`, `protocol`, `ci`, `docs`, `agents`, `deps`.
+  Optional, but use it whenever the change belongs to one area.
+- **description**: starts with an **action verb** in the imperative (`add`, `fix`, `remove`,
+  `rename`, ...), lower case, no trailing period, at most 72 characters.
+
+Examples:
+
+```text
+feat(backend): add route to get current map
+fix(backend): reject claims outside the canvas
+test(frontend): cover color picker keyboard navigation
+chore(deps): bump golangci-lint to v2.14
+```
+
+Details (breaking changes, trailers) are in [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
 ## Standards
 
 - Go: [`.github/instructions/go.instructions.md`](.github/instructions/go.instructions.md)
