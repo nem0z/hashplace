@@ -12,8 +12,8 @@ Read `AGENTS.md` and `.github/instructions/go.instructions.md` before you start.
 1. **Understand.** Read the issue, the linked spec section in `docs/spec/` and the relevant ADRs.
    If anything is ambiguous or conflicts with the spec, ask before coding.
 2. **Branch.** `git switch -c <type>/<issue>-<slug>` from an up-to-date `origin/main`.
-3. **Plan.** List the files and packages you will touch. If the change exceeds roughly 400 lines,
-   propose a split to the maintainer first.
+3. **Plan.** List the files and packages you will touch. If the change exceeds roughly 250 lines,
+   break it down into smaller PRs (stacked if they depend on each other).
 4. **Test first.** Write failing tests that encode the acceptance criteria, then implement.
    Bug fixes always start with a reproducing test.
 5. **Verify.** From `backend/`, run `gofmt -l .`, `go vet ./...`, `golangci-lint run` and

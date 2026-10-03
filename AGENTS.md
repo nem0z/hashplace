@@ -15,8 +15,8 @@ that renders the canvas and mines proofs in a Web Worker.
 
 1. **Never push to `main`, never merge a PR, never approve a PR.** Only the maintainer (@nem0z)
    merges. Branch protection enforces most of this; do not try to work around it.
-2. **One issue -> one branch -> one PR.** Keep PRs small and focused (target < 400 changed lines,
-   excluding lockfiles and generated code). If scope grows, stop and propose a split.
+2. **One issue -> one branch -> one PR.** Keep PRs small and focused (< 250 changed lines,
+   excluding lockfiles and generated code). If scope grows, break it down into smaller PRs.
 3. **Do not weaken the safety net.** Never delete or skip tests, disable linters, add `//nolint`
    or `eslint-disable` without a justification comment, lower coverage, or edit CI, branch
    protection, `AGENTS.md`, `.github/agents/` or `.github/skills/` unless the issue explicitly

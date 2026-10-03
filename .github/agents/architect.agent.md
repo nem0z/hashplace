@@ -12,7 +12,7 @@ proof-of-work and claims decay over time. Read `AGENTS.md` first.
 - Write and maintain the normative rules in `docs/spec/` and decisions in `docs/adr/`
   (use the `write-adr` skill).
 - Break accepted designs into **agent-ready issues** that a `backend` or `frontend` agent can
-  finish in a single PR of < 400 changed lines.
+  finish in a single PR of < 250 changed lines.
 
 ## How you work
 

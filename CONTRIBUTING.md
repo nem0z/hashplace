@@ -42,8 +42,8 @@ Breaking changes use `!` (`feat(protocol)!: bind proofs to cell generation`) and
 
 - **Title** is a Conventional Commit. It becomes the squash-commit message on `main` (CI checks it).
 - **Body** follows the PR template. Link the issue with `Closes #<n>`.
-- **Size**: target < 400 changed lines (excluding lockfiles and generated code). Split larger work
-  into stacked PRs.
+- **Size**: < 250 changed lines (excluding lockfiles and generated code). Break larger work down
+  into smaller, stacked PRs.
 - **One concern per PR.** Drive-by refactors go in their own PR.
 - Open as **draft**, wait for CI to be green, then mark ready.
 - During review, **push new commits** instead of force-pushing, so the reviewer can see what

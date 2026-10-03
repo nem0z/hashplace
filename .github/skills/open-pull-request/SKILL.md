@@ -29,8 +29,8 @@ git diff origin/main...
 ```
 
 - Remove debug output, commented-out code, TODOs without an issue link and unrelated changes.
-- Check the size. More than about 400 changed lines (excluding lockfiles and generated code) means
-  you either split the work or justify the size in the PR body.
+- Check the size. More than about 250 changed lines (excluding lockfiles and generated code) means
+  you must break the work down into smaller PRs.
 - Check that spec, ADR and doc updates are included where needed.
 
 ## 4. Push and open as draft

@@ -23,7 +23,7 @@ Closes #
 ## Checklist
 
 - [ ] Title is a Conventional Commit (`type(scope): summary`)
-- [ ] Scoped to a single issue; < 400 changed lines or the split is justified below
+- [ ] Scoped to a single issue; < 250 changed lines
 - [ ] Tests added or updated for the new behavior
 - [ ] `docs/spec/` updated if game/protocol rules changed
 - [ ] ADR added if an architectural decision was made
