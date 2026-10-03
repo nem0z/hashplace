@@ -27,19 +27,15 @@ flowchart LR
 
 ## 1. From idea to issues
 
-1. The maintainer opens a **Design** issue (template) or just describes the idea to the
-   `architect` agent.
+1. The maintainer opens an issue or describes the idea to the `architect` agent.
 2. The architect asks questions, then opens a docs PR that changes `docs/spec/` and/or adds an ADR.
 3. When the maintainer merges it, the architect creates **agent-ready** issues: one per PR-sized
    step, with acceptance criteria, scope and dependencies.
 
 ## 2. From issue to PR
 
-1. Start an agent on an issue, either:
-   - **Locally in the Copilot app or CLI**: open a session on the issue and select the `backend`
-     or `frontend` agent, or
-   - **In the cloud**: assign the issue to Copilot. `copilot-setup-steps.yml` preinstalls Go,
-     Node and golangci-lint.
+1. Open a session on the issue in the Copilot desktop app (agents run on the maintainer's local
+   machine) and select the `backend` or `frontend` agent.
 2. The agent branches (`<type>/<issue>-<slug>`), writes tests first, implements, and runs all checks.
 3. The agent opens a **draft** PR with the `open-pull-request` skill, waits for CI to be green
    and marks the PR ready.
