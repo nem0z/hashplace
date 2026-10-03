@@ -25,7 +25,7 @@ Closes #
 - [ ] Title is a Conventional Commit (`type(scope): summary`)
 - [ ] Scoped to a single issue; < 400 changed lines or the split is justified below
 - [ ] Tests added or updated for the new behavior
-- [ ] `docs/spec/claims.md` updated if game/protocol rules changed
+- [ ] `docs/spec/` updated if game/protocol rules changed
 - [ ] ADR added if an architectural decision was made
 - [ ] No new dependencies, or each one is justified below
 

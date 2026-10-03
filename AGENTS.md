@@ -21,7 +21,7 @@ that renders the canvas and mines proofs in a Web Worker.
    or `eslint-disable` without a justification comment, lower coverage, or edit CI, branch
    protection, `AGENTS.md`, `.github/agents/` or `.github/skills/` unless the issue explicitly
    asks for it.
-4. **The spec is the source of truth for game rules.** `docs/spec/claims.md` defines how claims,
+4. **The spec is the source of truth for game rules.** `docs/spec/` defines how claims,
    proof-of-work and decay behave. Code must match it. If the code needs a rule change, change
    the spec in the same PR and call it out in the PR description.
 5. **Decisions are written down.** Any architectural decision (new dependency, new package

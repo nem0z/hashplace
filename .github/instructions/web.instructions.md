@@ -19,7 +19,7 @@ applyTo: "web/**"
 - Folder layout under `web/src/`:
   - `api/`: typed HTTP and stream client. The only place that calls `fetch`.
   - `pow/`: preimage encoding and the mining Web Worker. It must match the Go encoding byte for
-    byte and pass the shared golden vectors.
+    byte.
   - `canvas/`: rendering (a single `<canvas>` element, never one DOM node per pixel), pan and zoom.
   - `components/`: presentational components.
   - `hooks/`: state and effects glue.
@@ -41,7 +41,6 @@ applyTo: "web/**"
 
 - Unit-test logic (encoding, state reducers, hooks). Test components through user-visible
   behavior with Testing Library.
-- The proof-of-work encoding is tested against `docs/spec/vectors/`.
 - No snapshot tests for large component trees.
 
 ## Commands

@@ -4,7 +4,7 @@ A collaborative pixel canvas in the spirit of r/place, but **paid for in hashes 
 
 To paint a cell you solve a proof-of-work. The harder the work, the stronger your claim. Claims decay over time, so every pixel eventually becomes cheap to take back.
 
-> Status: early design. The game rules are drafted in [`docs/spec/claims.md`](docs/spec/claims.md).
+> Status: early design.
 
 ## Stack
 
