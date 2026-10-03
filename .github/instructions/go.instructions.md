@@ -30,9 +30,12 @@ Add complexity only when the simple version does not work or the maintainer asks
 
 - `context.Context` is the first parameter of anything that does I/O or may block. Never store
   it in a struct.
-- Errors: wrap with `fmt.Errorf("doing x: %w", err)` and expose sentinel or typed errors from
-  domain packages (`canvas.ErrClaimTooWeak`). Check them with `errors.Is` and `errors.As`.
-  Handle an error once: log it **or** return it, not both.
+- Errors: wrap only with context the **current** function owns: what *it* was doing and with
+  which inputs, for example `fmt.Errorf("load cell (%d,%d): %w", x, y, err)`. Context about the
+  operation that failed belongs in the function that returned the error, not in its callers. If
+  the current function has nothing relevant to add, return `err` as is.
+- Expose sentinel or typed errors from domain packages (`canvas.ErrClaimTooWeak`) and check them
+  with `errors.Is` and `errors.As`. Handle an error once: log it **or** return it, not both.
 - No panics outside `main` startup and genuine programmer errors.
 - No mutable package-level state. Configuration is a struct populated in `main` from flags or env.
 - **Time and randomness are injected** (for example `now func() time.Time` and an `io.Reader` for
