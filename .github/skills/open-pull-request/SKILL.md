@@ -15,6 +15,10 @@ git rebase origin/main          # resolve conflicts, re-run tests afterwards
 git branch --show-current       # must match <type>/<issue>-<slug>
 ```
 
+If the branch was already pushed, a rebase needs a force-push. Always use
+`git push --force-with-lease`, never plain `--force`: it refuses to overwrite commits you have not
+seen.
+
 ## 2. Verify
 
 Run the checks for every area you touched (see `AGENTS.md` > Commands). Everything must pass

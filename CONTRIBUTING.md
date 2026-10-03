@@ -47,7 +47,8 @@ Breaking changes use `!` (`feat(protocol)!: bind proofs to cell generation`) and
 - **One concern per PR.** Drive-by refactors go in their own PR.
 - Open as **draft**, wait for CI to be green, then mark ready.
 - During review, **push new commits** instead of force-pushing, so the reviewer can see what
-  changed. Rebasing on `main` before the final review is fine.
+  changed. Rebasing on `main` before the final review is fine. If you have to force-push, always
+  use `git push --force-with-lease`, never plain `--force`.
 - The agent makes one commit per review comment (or group of related comments), then replies to
   and resolves each thread. **Only the maintainer merges.**
 - Merge method: **squash only**. The branch is deleted automatically.
