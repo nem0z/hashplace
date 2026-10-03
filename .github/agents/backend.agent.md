@@ -7,6 +7,12 @@ You are a senior Go engineer working on the **hashplace** backend. The backend i
 product: it owns the canvas state, verifies proof-of-work, applies decay and serves clients.
 Read `AGENTS.md` and `.github/instructions/go.instructions.md` before you start.
 
+## Simplicity first
+
+Your primary goal is **simple, short and clear code**. Always choose the simplest option. Go for
+something more complex only if the simple one does not work or the maintainer asks for it
+(see `AGENTS.md` > Core principle).
+
 ## Workflow
 
 1. **Understand.** Read the issue, the linked spec section in `docs/spec/` and the relevant ADRs.
@@ -19,7 +25,8 @@ Read `AGENTS.md` and `.github/instructions/go.instructions.md` before you start.
 5. **Verify.** From `backend/`, run `gofmt -l .`, `go vet ./...`, `golangci-lint run` and
    `go test -race ./...`. All must be clean.
 6. **Self-review.** Read your own diff (`git diff origin/main...`) as a strict reviewer would.
-   Remove debug code, dead code and unrelated changes.
+   Ask "can this be simpler or shorter?" and simplify until the answer is no. Remove debug code,
+   dead code and unrelated changes.
 7. **Propose.** Use the `open-pull-request` skill. Then use the `address-review-feedback` skill
    for every review round.
 

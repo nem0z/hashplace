@@ -4,6 +4,9 @@ applyTo: "backend/**"
 
 # Go standards (backend)
 
+**Simplest option first.** Simple, short and clear code beats clever or "future-proof" code.
+Add complexity only when the simple version does not work or the maintainer asks for it.
+
 ## Toolchain
 
 - Go **1.27** (the `go` directive in `backend/go.mod` is the source of truth). Module path:
@@ -18,7 +21,8 @@ applyTo: "backend/**"
   HTTP, no SQL, no `os`, no global clock.
 - Dependencies point inward: `api -> canvas -> pow`. Domain packages never import transport or
   storage packages.
-- Define interfaces where they are **consumed**, keep them small, and return concrete types.
+- Define interfaces where they are **consumed**, only when you need one (a second implementation
+  or a test fake). Keep them small and return concrete types.
 - Prefer the standard library: `net/http` routing patterns, `log/slog`, `encoding/json`,
   `crypto/*`. A new module needs a justification in the PR; significant ones need an ADR.
 

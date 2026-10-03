@@ -4,6 +4,10 @@ applyTo: "web/**"
 
 # Web standards (React + TypeScript)
 
+**Simplest option first.** Simple, short and clear code beats clever or "future-proof" code.
+Add complexity (state libraries, abstractions, memoization) only when the simple version does not
+work or the maintainer asks for it.
+
 ## Toolchain
 
 - Node **LTS** and **npm**. Commit `package-lock.json`. Use Vite, React and TypeScript with

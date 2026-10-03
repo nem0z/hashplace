@@ -11,6 +11,19 @@ decays over time, so any cell can eventually be reclaimed. The backend (Go, in `
 product's core and owns all rules. The frontend (React + TypeScript, in `web/`) is a thin client
 that renders the canvas and mines proofs in a Web Worker.
 
+## Core principle: simplest option first
+
+**Simple, short and clear code is the primary goal of every coding agent.**
+
+- Always pick the **simplest option that works**. Move to something more complex only when the
+  simple option demonstrably does not work (a failing test, a measured problem) or when the
+  maintainer explicitly asks for it. If you do, say why in the PR.
+- Fewer lines, fewer types, fewer layers. No speculative abstractions, interfaces nobody needs
+  yet, generic helpers, configuration knobs or optimizations "for later".
+- Straightforward control flow: early returns, small functions, obvious names. No clever tricks.
+- Reuse the standard library and existing code before adding dependencies or new patterns.
+- When two options are equally simple, pick the one that is easier to read.
+
 ## Non-negotiable rules
 
 1. **Never push to `main`, never merge a PR, never approve a PR.** Only the maintainer (@nem0z)
