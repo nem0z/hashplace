@@ -45,7 +45,7 @@ Breaking changes use `!` (`feat(protocol)!: bind proofs to cell generation`) and
 - **Size**: < 250 changed lines (excluding lockfiles and generated code). Break larger work down
   into smaller, stacked PRs.
 - **One concern per PR.** Drive-by refactors go in their own PR.
-- Open as **draft**, wait for CI to be green, then mark ready.
+- Open the PR directly as ready for review (no draft), then make sure CI is green.
 - During review, **push new commits** instead of force-pushing, so the reviewer can see what
   changed. Rebasing on `main` before the final review is fine. If you have to force-push, always
   use `git push --force-with-lease`, never plain `--force`.

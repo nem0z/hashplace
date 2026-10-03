@@ -37,11 +37,13 @@ git diff origin/main...
   you must break the work down into smaller PRs.
 - Check that spec, ADR and doc updates are included where needed.
 
-## 4. Push and open as draft
+## 4. Push and open the PR
+
+Open a regular PR, ready for review (not a draft).
 
 ```sh
 git push -u origin HEAD
-gh pr create --draft --base main \
+gh pr create --base main \
   --title "<type>(<scope>): <summary>" \
   --body-file <filled-template.md> \
   --label "<type:...>" --label "<area:...>"
@@ -53,10 +55,9 @@ gh pr create --draft --base main \
 - The title must be a Conventional Commit (CI enforces this): lower-case summary, imperative mood,
   no trailing period.
 
-## 5. Pre-review
+## 5. Wait for CI
 
-1. Wait for CI: `gh pr checks <n> --watch`. Fix failures with new commits.
-2. Mark the PR ready: `gh pr ready <n>`.
+Run `gh pr checks <n> --watch`. Fix failures with new commits until everything is green.
 
 ## 6. Hand off
 

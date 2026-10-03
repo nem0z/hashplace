@@ -8,8 +8,7 @@ flowchart LR
     I[Idea] -->|architect agent| D[Spec / ADR PR]
     D -->|maintainer merges| S[Agent-ready issues]
     S -->|backend / frontend agent| B[Branch + tests + code]
-    B -->|open-pull-request skill| P[Draft PR]
-    P -->|CI green| R[Ready for review]
+    B -->|open-pull-request skill| R[PR, CI green]
     R -->|maintainer review| F{Approved?}
     F -->|changes requested| A[address-review-feedback skill]
     A --> R
@@ -37,8 +36,8 @@ flowchart LR
 1. Open a session on the issue in the Copilot desktop app (agents run on the maintainer's local
    machine) and select the `backend` or `frontend` agent.
 2. The agent branches (`<type>/<issue>-<slug>`), writes tests first, implements, and runs all checks.
-3. The agent opens a **draft** PR with the `open-pull-request` skill, waits for CI to be green
-   and marks the PR ready.
+3. The agent opens the PR (not a draft) with the `open-pull-request` skill and makes sure CI is
+   green.
 
 ## 3. Review and merge
 
