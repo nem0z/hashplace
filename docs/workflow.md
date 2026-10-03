@@ -9,7 +9,7 @@ flowchart LR
     D -->|maintainer merges| S[Agent-ready issues]
     S -->|backend / frontend agent| B[Branch + tests + code]
     B -->|open-pull-request skill| P[Draft PR]
-    P -->|CI + reviewer agent| R[Ready for review]
+    P -->|CI green| R[Ready for review]
     R -->|maintainer review| F{Approved?}
     F -->|changes requested| A[address-review-feedback skill]
     A --> R
@@ -24,7 +24,6 @@ flowchart LR
 | `architect`      | Specs, ADRs, splits work into agent-ready issues                | Product code                   |
 | `backend`        | Implements `backend/` issues, test-first                        | Merges, touches `web/`         |
 | `frontend`       | Implements `web/` issues                                        | Merges, touches `backend/`     |
-| `reviewer`       | Pre-reviews PRs and posts one summary review                    | Edits code, approves, merges   |
 
 ## 1. From idea to issues
 
@@ -42,8 +41,8 @@ flowchart LR
    - **In the cloud**: assign the issue to Copilot. `copilot-setup-steps.yml` preinstalls Go,
      Node and golangci-lint.
 2. The agent branches (`<type>/<issue>-<slug>`), writes tests first, implements, and runs all checks.
-3. The agent opens a **draft** PR with the `open-pull-request` skill, waits for CI, runs the
-   `reviewer` agent, fixes the findings and marks the PR ready.
+3. The agent opens a **draft** PR with the `open-pull-request` skill, waits for CI to be green
+   and marks the PR ready.
 
 ## 3. Review and merge
 

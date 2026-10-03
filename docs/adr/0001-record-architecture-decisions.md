@@ -27,5 +27,5 @@ the system does, while ADRs record *why* it was built that way.
 
 ## Consequences
 
-PRs that make an architectural decision must include an ADR. Reviewers (agent or human) should
-ask for one when it is missing.
+PRs that make an architectural decision must include an ADR. The reviewer should ask for one
+when it is missing.

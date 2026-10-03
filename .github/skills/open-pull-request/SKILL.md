@@ -52,9 +52,7 @@ gh pr create --draft --base main \
 ## 5. Pre-review
 
 1. Wait for CI: `gh pr checks <n> --watch`. Fix failures with new commits.
-2. Run the `reviewer` agent on the PR and address its **Must fix** findings with new commits.
-   Reply in the PR to explain any finding you chose not to address.
-3. Mark the PR ready: `gh pr ready <n>`.
+2. Mark the PR ready: `gh pr ready <n>`.
 
 ## 6. Hand off
 

@@ -33,7 +33,7 @@ Work only on unresolved threads, plus top-level review bodies and PR comments fr
 | Suggestion you disagree with  | Reply with a concise technical argument. Do not silently ignore it. |
 | Out of scope                  | Propose a follow-up issue. Create it only if the maintainer agrees. |
 
-Maintainer comments always win over reviewer-agent comments. If two comments conflict, ask.
+If two comments conflict, ask.
 
 ## 3. Fix with incremental commits
 

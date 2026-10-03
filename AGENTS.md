@@ -43,7 +43,7 @@ docs/
   spec/             normative game/protocol rules
   adr/              architecture decision records
 .github/
-  agents/           custom agent definitions (architect, backend, frontend, reviewer)
+  agents/           custom agent definitions (architect, backend, frontend)
   skills/           reusable procedures (open-pull-request, address-review-feedback, ...)
   instructions/     path-scoped coding standards (auto-applied by Copilot)
   workflows/        CI
@@ -74,7 +74,6 @@ Run the checks for every area you touched before opening or updating a PR.
 | `architect` | Turning ideas into specs, ADRs and agent-ready issues. Writes no product code. |
 | `backend`   | Implementing Go issues in `backend/`.                                   |
 | `frontend`  | Implementing React issues in `web/`.                                    |
-| `reviewer`  | Reviewing a PR against these standards before the maintainer looks at it. |
 
 | Skill                     | Use it when                                              |
 |---------------------------|----------------------------------------------------------|

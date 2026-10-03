@@ -45,7 +45,7 @@ Breaking changes use `!` (`feat(protocol)!: bind proofs to cell generation`) and
 - **Size**: target < 400 changed lines (excluding lockfiles and generated code). Split larger work
   into stacked PRs.
 - **One concern per PR.** Drive-by refactors go in their own PR.
-- Open as **draft**, run the `reviewer` agent, address its findings, then mark ready.
+- Open as **draft**, wait for CI to be green, then mark ready.
 - During review, **push new commits** instead of force-pushing, so the reviewer can see what
   changed. Rebasing on `main` before the final review is fine.
 - The agent replies to every review thread. **Only the maintainer resolves threads and merges.**

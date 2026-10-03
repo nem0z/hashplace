@@ -28,7 +28,6 @@ Closes #
 - [ ] `docs/spec/claims.md` updated if game/protocol rules changed
 - [ ] ADR added if an architectural decision was made
 - [ ] No new dependencies, or each one is justified below
-- [ ] `reviewer` agent pass done and findings addressed
 
 ## Notes for the reviewer
 
