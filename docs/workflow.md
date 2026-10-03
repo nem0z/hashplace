@@ -19,7 +19,7 @@ flowchart LR
 
 | Who              | Does                                                            | Never does                     |
 |------------------|-----------------------------------------------------------------|--------------------------------|
-| Maintainer       | Prioritizes, decides, reviews, merges                           | -                              |
+| @nem0z (maintainer) | Prioritizes, decides, reviews, merges                        | -                              |
 | `architect`      | Specs, ADRs, splits work into agent-ready issues                | Product code                   |
 | `backend`        | Implements `backend/` issues, test-first                        | Merges, touches `frontend/`    |
 | `frontend`       | Implements `frontend/` issues                                   | Merges, touches `backend/`     |
