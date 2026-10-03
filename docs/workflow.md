@@ -20,7 +20,7 @@ flowchart LR
 
 | Who              | Does                                                            | Never does                     |
 |------------------|-----------------------------------------------------------------|--------------------------------|
-| Maintainer       | Prioritizes, decides, reviews, resolves threads, merges         | -                              |
+| Maintainer       | Prioritizes, decides, reviews, merges                           | -                              |
 | `architect`      | Specs, ADRs, splits work into agent-ready issues                | Product code                   |
 | `backend`        | Implements `backend/` issues, test-first                        | Merges, touches `frontend/`    |
 | `frontend`       | Implements `frontend/` issues                                   | Merges, touches `backend/`     |
@@ -44,10 +44,10 @@ flowchart LR
 
 1. The maintainer reviews on GitHub, leaving inline comments and a "Request changes" or
    "Comment" review.
-2. The agent runs the `address-review-feedback` skill. It pushes incremental commits (no
-   force-push), replies in each thread and posts a round summary.
-3. The maintainer resolves threads when satisfied, and **squash-merges** when CI is green and all
-   threads are resolved. The PR title becomes the commit on `main`.
+2. The agent runs the `address-review-feedback` skill. It makes one commit per comment (or group
+   of related comments), replies to and resolves each thread, and posts a round summary.
+3. The maintainer re-reviews (and can reopen any thread), then **squash-merges** when CI is green
+   and all threads are resolved. The PR title becomes the commit on `main`.
 
 ## Guardrails on `main`
 

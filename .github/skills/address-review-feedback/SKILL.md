@@ -1,6 +1,6 @@
 ---
 name: address-review-feedback
-description: Work through review comments on a hashplace pull request you own. Fix or answer every thread, push incremental commits and hand back to the maintainer. Use when a PR has new review comments or requested changes.
+description: Work through review comments on a hashplace pull request you own. Make one commit per comment (or group of related comments), reply to and resolve every thread, then hand back to the maintainer. Use when a PR has new review comments or requested changes.
 ---
 
 # Address review feedback
@@ -35,25 +35,31 @@ Work only on unresolved threads, plus top-level review bodies and PR comments fr
 
 If two comments conflict, ask.
 
-## 3. Fix with incremental commits
+## 3. One commit per comment
 
-- **Push new commits. Do not force-push during review**, so the maintainer can see what changed
-  since their last review.
-- Use one commit per logical fix or one per review round, for example
-  `fix(backend): reject negative coordinates in claim request`.
+- Make **one commit per review comment**, or one per group of comments that ask for the same
+  change. Each thread then maps to exactly one commit.
+- The commit message follows the commit standard in `CONTRIBUTING.md` and describes the change,
+  for example `fix(backend): reject negative coordinates in claim request`.
+- Push new commits on top of the branch, so the maintainer can see what changed since their last
+  review.
 - Re-run the full checks for the touched areas before pushing.
 
-## 4. Reply in every thread
+## 4. Reply to and resolve every thread
 
-Reply inside the thread (not as a new top-level comment) with what you did and the commit SHA,
-for example "Fixed in a1b2c3d: bounds are now validated in `canvas.Cell`".
+After pushing, go through each thread: reply inside it (not as a new top-level comment) with what
+you did and the commit SHA, then **resolve it**. Example reply: "Fixed in a1b2c3d: bounds are now
+validated in `canvas.Cell`". A comment answered without a code change gets the answer, then is
+resolved too.
 
 ```sh
 gh api repos/nem0z/hashplace/pulls/<n>/comments/<root-comment-id>/replies -f body='...'
+gh api graphql -F id=<thread-id> -f query='
+mutation($id:ID!){ resolveReviewThread(input:{threadId:$id}){ thread{ isResolved } } }'
 ```
 
-**Do not resolve threads.** The maintainer resolves them once satisfied. Branch protection
-requires every thread to be resolved before merging.
+Leave a thread unresolved only when you need a decision from the maintainer (a disagreement or an
+open question). Say so explicitly in your reply.
 
 ## 5. Hand back
 

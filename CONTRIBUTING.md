@@ -48,7 +48,8 @@ Breaking changes use `!` (`feat(protocol)!: bind proofs to cell generation`) and
 - Open as **draft**, wait for CI to be green, then mark ready.
 - During review, **push new commits** instead of force-pushing, so the reviewer can see what
   changed. Rebasing on `main` before the final review is fine.
-- The agent replies to every review thread. **Only the maintainer resolves threads and merges.**
+- The agent makes one commit per review comment (or group of related comments), then replies to
+  and resolves each thread. **Only the maintainer merges.**
 - Merge method: **squash only**. The branch is deleted automatically.
 
 ## Definition of done
