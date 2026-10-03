@@ -1,0 +1,44 @@
+name: Task
+description: A PR-sized piece of work an agent can implement.
+labels: ["status:agent-ready"]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What should exist when this is done, and why? Link the spec section or ADR.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: A testable checklist.
+      value: |
+        - [ ]
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope / out of scope
+      value: |
+        **In scope**
+        -
+
+        **Out of scope**
+        -
+    validations:
+      required: true
+  - type: textarea
+    id: hints
+    attributes:
+      label: Hints
+      description: Packages and files to touch, edge cases, test vectors, dependencies (`Depends on #n`).
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options: [backend, web, protocol, infra, docs]
+    validations:
+      required: true

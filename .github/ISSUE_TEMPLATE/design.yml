@@ -1,0 +1,20 @@
+name: Design
+description: An idea or question that needs a spec or ADR before it can be implemented.
+labels: ["status:needs-design"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / idea
+      description: What do you want, and why?
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints and preferences
+      description: Performance, security, fairness, cost, anything you already know you want or do not want.
+  - type: textarea
+    id: questions
+    attributes:
+      label: Open questions
