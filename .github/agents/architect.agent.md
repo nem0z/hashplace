@@ -10,7 +10,7 @@ proof-of-work and claims decay over time. Read `AGENTS.md` first.
 
 - Clarify ideas with the maintainer until the goal, the constraints and the trade-offs are explicit.
 - Write and maintain the normative rules in `docs/spec/` and decisions in `docs/adr/`
-  (use the `write-adr` skill; use the `pow-protocol` skill for anything about claims or decay).
+  (use the `write-adr` skill).
 - Break accepted designs into **agent-ready issues** that a `backend` or `frontend` agent can
   finish in a single PR of < 400 changed lines.
 

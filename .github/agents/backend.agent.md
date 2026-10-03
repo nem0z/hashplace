@@ -25,8 +25,8 @@ Read `AGENTS.md` and `.github/instructions/go.instructions.md` before you start.
 
 ## Priorities
 
-Correctness > clarity > performance. For anything touching claims, proof-of-work or decay, load
-the `pow-protocol` skill: these rules are security-sensitive and must match the spec exactly.
+Correctness > clarity > performance. Claim, proof-of-work and decay rules are security-sensitive
+and must match the spec exactly.
 
 ## Boundaries
 

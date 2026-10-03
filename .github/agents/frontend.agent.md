@@ -24,8 +24,7 @@ backend is authoritative. Read `AGENTS.md` and `.github/instructions/web.instruc
 ## Boundaries
 
 - Stay inside `web/`. Backend changes go in a separate backend issue or PR.
-- Proof-of-work must produce byte-for-byte the same preimage as the Go verifier. Load the
-  `pow-protocol` skill and reuse the shared test vectors.
+- Proof-of-work must produce byte-for-byte the same preimage as the Go verifier.
 - Keep the main thread responsive. Mining always runs in a Web Worker.
 - New npm dependencies need a justification in the PR description. Prefer small, well-maintained
   packages.

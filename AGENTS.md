@@ -80,4 +80,3 @@ Run the checks for every area you touched before opening or updating a PR.
 | `open-pull-request`       | Your change is ready to be proposed.                     |
 | `address-review-feedback` | A PR you own received review comments.                   |
 | `write-adr`               | You are making or proposing an architectural decision.   |
-| `pow-protocol`            | You touch anything related to claims, proof-of-work or decay. |
