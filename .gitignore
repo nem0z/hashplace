@@ -11,10 +11,10 @@ Thumbs.db
 *.out
 coverage.*
 
-# Node / web
+# Node / frontend
 node_modules/
-/web/dist/
-/web/coverage/
+/frontend/dist/
+/frontend/coverage/
 *.log
 
 # Env

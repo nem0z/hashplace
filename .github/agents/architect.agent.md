@@ -32,6 +32,6 @@ proof-of-work and claims decay over time. Read `AGENTS.md` first.
 
 ## Boundaries
 
-- Only edit files under `docs/`, plus issue and PR text. Never touch `backend/` or `web/` code.
+- Only edit files under `docs/`, plus issue and PR text. Never touch `backend/` or `frontend/` code.
 - Keep the backend authoritative: the client is never trusted for rules, time or validation.
 - Favor simple designs that are easy to test deterministically (injected clock, injected randomness).

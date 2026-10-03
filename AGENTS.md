@@ -8,7 +8,7 @@ documents it links to for the area you are touching.
 **hashplace** is a collaborative pixel canvas (like r/place) where painting a cell costs
 proof-of-work instead of a cooldown timer. A claim's strength comes from the work behind it and
 decays over time, so any cell can eventually be reclaimed. The backend (Go, in `backend/`) is the
-product's core and owns all rules. The frontend (React + TypeScript, in `web/`) is a thin client
+product's core and owns all rules. The frontend (React + TypeScript, in `frontend/`) is a thin client
 that renders the canvas and mines proofs in a Web Worker.
 
 ## Core principle: simplest option first
@@ -50,7 +50,7 @@ that renders the canvas and mines proofs in a Web Worker.
 backend/            Go module (github.com/nem0z/hashplace/backend)
   cmd/hashplaced/   server entrypoint
   internal/         application packages (see docs/adr/0002-repository-layout.md)
-web/                React + TypeScript client (Vite)
+frontend/           React + TypeScript client (Vite)
 docs/
   workflow.md       how work flows from issue to merged PR
   spec/             normative game/protocol rules
@@ -62,21 +62,21 @@ docs/
   workflows/        CI
 ```
 
-`backend/` and `web/` are created by their scaffold issues; until then CI skips them.
+`backend/` and `frontend/` are created by their scaffold issues; until then CI skips them.
 
 ## Commands
 
 Run the checks for every area you touched before opening or updating a PR.
 
-| Area    | Command (from repo root)                                                                 |
-|---------|-------------------------------------------------------------------------------------------|
-| Backend | `cd backend && gofmt -l . && go vet ./... && golangci-lint run && go test -race ./...`   |
-| Web     | `cd web && npm ci && npm run lint && npm run typecheck && npm test && npm run build`     |
+| Area     | Command (from repo root)                                                                  |
+|----------|-------------------------------------------------------------------------------------------|
+| Backend  | `cd backend && gofmt -l . && go vet ./... && golangci-lint run && go test -race ./...`    |
+| Frontend | `cd frontend && npm ci && npm run lint && npm run typecheck && npm test && npm run build` |
 
 ## Standards
 
 - Go: [`.github/instructions/go.instructions.md`](.github/instructions/go.instructions.md)
-- React/TypeScript: [`.github/instructions/web.instructions.md`](.github/instructions/web.instructions.md)
+- React/TypeScript: [`.github/instructions/frontend.instructions.md`](.github/instructions/frontend.instructions.md)
 - Git, commits and PRs: [`CONTRIBUTING.md`](CONTRIBUTING.md)
 - End-to-end workflow: [`docs/workflow.md`](docs/workflow.md)
 
@@ -86,7 +86,7 @@ Run the checks for every area you touched before opening or updating a PR.
 |-------------|-------------------------------------------------------------------------|
 | `architect` | Turning ideas into specs, ADRs and agent-ready issues. Writes no product code. |
 | `backend`   | Implementing Go issues in `backend/`.                                   |
-| `frontend`  | Implementing React issues in `web/`.                                    |
+| `frontend`  | Implementing React issues in `frontend/`.                               |
 
 | Skill                     | Use it when                                              |
 |---------------------------|----------------------------------------------------------|

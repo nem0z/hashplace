@@ -17,7 +17,7 @@ Closes #
 <!-- Commands run and their outcome. New or changed tests. Manual checks, if any. -->
 
 - [ ] `backend`: `gofmt`, `go vet`, `golangci-lint`, `go test -race ./...`
-- [ ] `web`: `lint`, `typecheck`, `test`, `build`
+- [ ] `frontend`: `lint`, `typecheck`, `test`, `build`
 - [ ] Not applicable (docs / CI only)
 
 ## Checklist

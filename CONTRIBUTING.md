@@ -33,7 +33,7 @@ Use [Conventional Commits](https://www.conventionalcommits.org/):
 
 | Types | `feat`, `fix`, `perf`, `refactor`, `test`, `docs`, `build`, `ci`, `chore`, `revert` |
 |-------|----------------------------------------------------------------------------------------|
-| Scopes | `backend`, `web`, `protocol`, `ci`, `docs`, `agents`, `deps`                          |
+| Scopes | `backend`, `frontend`, `protocol`, `ci`, `docs`, `agents`, `deps`                          |
 
 Breaking changes use `!` (`feat(protocol)!: bind proofs to cell generation`) and a
 `BREAKING CHANGE:` footer. AI-authored commits keep the tool's `Co-authored-by` trailer.

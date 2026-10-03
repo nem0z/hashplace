@@ -22,8 +22,8 @@ flowchart LR
 |------------------|-----------------------------------------------------------------|--------------------------------|
 | Maintainer       | Prioritizes, decides, reviews, resolves threads, merges         | -                              |
 | `architect`      | Specs, ADRs, splits work into agent-ready issues                | Product code                   |
-| `backend`        | Implements `backend/` issues, test-first                        | Merges, touches `web/`         |
-| `frontend`       | Implements `web/` issues                                        | Merges, touches `backend/`     |
+| `backend`        | Implements `backend/` issues, test-first                        | Merges, touches `frontend/`    |
+| `frontend`       | Implements `frontend/` issues                                   | Merges, touches `backend/`     |
 
 ## 1. From idea to issues
 
@@ -54,7 +54,7 @@ flowchart LR
 A repository ruleset on `main` enforces:
 
 - changes only through pull requests (no direct pushes, no force-pushes, no deletion),
-- required checks: `ci-ok` (backend and web CI) and `conventional-title`,
+- required checks: `ci-ok` (backend and frontend CI) and `conventional-title`,
 - all review threads resolved before merging,
 - squash merge only, linear history.
 
@@ -68,7 +68,7 @@ A repository ruleset on `main` enforces:
 | Label                    | Meaning                                         |
 |--------------------------|-------------------------------------------------|
 | `type:feature`, `type:bug`, `type:chore`, `type:docs` | Kind of work          |
-| `area:backend`, `area:web`, `area:protocol`, `area:infra` | Part of the system |
+| `area:backend`, `area:frontend`, `area:protocol`, `area:infra` | Part of the system |
 | `status:needs-design`    | Needs a spec or ADR before implementation       |
 | `status:agent-ready`     | Fully specified; any agent can pick it up       |
 | `status:blocked`         | Waiting on another issue or a decision          |

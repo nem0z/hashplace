@@ -18,13 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       backend: ${{ steps.detect.outputs.backend }}
-      web: ${{ steps.detect.outputs.web }}
+      frontend: ${{ steps.detect.outputs.frontend }}
     steps:
       - uses: actions/checkout@v7
       - id: detect
         run: |
           echo "backend=$([ -f backend/go.mod ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
-          echo "web=$([ -f web/package.json ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "frontend=$([ -f frontend/package.json ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
 
   backend:
     name: backend
@@ -56,21 +56,21 @@ jobs:
       - name: build
         run: go build ./...
 
-  web:
-    name: web
+  frontend:
+    name: frontend
     needs: detect
-    if: needs.detect.outputs.web == 'true'
+    if: needs.detect.outputs.frontend == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: web
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           cache: npm
-          cache-dependency-path: web/package-lock.json
+          cache-dependency-path: frontend/package-lock.json
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
@@ -80,7 +80,7 @@ jobs:
   # Single required status check for branch protection.
   ci-ok:
     name: ci-ok
-    needs: [detect, backend, web]
+    needs: [detect, backend, frontend]
     if: always()
     runs-on: ubuntu-latest
     steps:

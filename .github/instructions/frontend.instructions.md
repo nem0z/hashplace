@@ -1,8 +1,8 @@
 ---
-applyTo: "web/**"
+applyTo: "frontend/**"
 ---
 
-# Web standards (React + TypeScript)
+# Frontend standards (React + TypeScript)
 
 **Simplest option first.** Simple, short and clear code beats clever or "future-proof" code.
 Add complexity (state libraries, abstractions, memoization) only when the simple version does not
@@ -20,7 +20,7 @@ work or the maintainer asks for it.
 
 - The client is a **view and a miner**. It never decides whether a claim is valid. It shows what
   the server says.
-- Folder layout under `web/src/`:
+- Folder layout under `frontend/src/`:
   - `api/`: typed HTTP and stream client. The only place that calls `fetch`.
   - `pow/`: preimage encoding and the mining Web Worker. It must match the Go encoding byte for
     byte.
@@ -50,7 +50,7 @@ work or the maintainer asks for it.
 ## Commands
 
 ```sh
-cd web
+cd frontend
 npm ci
 npm run lint
 npm run typecheck
