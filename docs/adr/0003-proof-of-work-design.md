@@ -14,13 +14,21 @@ verify on the server and fast enough to mine in a browser.
 
 **Decay**
 
-1. **Bits decay** (strength in leading zero bits, minus a fixed number of bits per period)
+1. **Bits decay**: strength in bits, `256 - log2(hash)`, minus a fixed number of bits per period.
+   Linear decay in bits is exponential in work, since 1 bit is a factor of 2.
    - Pros: retake cost halves every period, so even a huge proof is cheap again after a bounded
      time. Hardware advantage is capped (1000x is only about 10 bits).
    - Cons: protection grows only logarithmically with work.
 2. **Work decays** (strength in expected hashes, minus a fixed number of hashes per second)
    - Pros: protection is proportional to effort.
    - Cons: GPU owners can lock cells for a very long time.
+
+**Unit of work**
+
+1. **Actual hash value** (`256 - log2(hash)`, fractional): every hash counts for exactly its
+   value, so there are no factor-of-2 jumps between thresholds. Cons: float64 math.
+2. **Count of leading zero bits** (integer): integer-only math. Cons: work moves in factor-of-2
+   steps, and a lucky hash gets no credit beyond its last zero bit.
 
 **Hash function**
 
@@ -41,14 +49,15 @@ verify on the server and fast enough to mine in a browser.
 ## Decision
 
 Bits decay, continuous, SHA-256, and proofs bound to cell, color and generation with no
-challenge. Integer leading zero bits are the unit of work. The claim rule is evaluated with
-integers only. Parameters: 256 x 256 canvas, 16 colors, `minBits = 22`, `decayPeriod = 300 s`.
-Players are anonymous. Details are in [`docs/spec/claims.md`](../spec/claims.md).
+challenge. Work is the actual hash value expressed in bits (`256 - log2(hash)`, float64). The rule
+is `claimed_work - elapsed / decayPeriod < new_work`. Parameters: 256 x 256 canvas, 16 colors,
+`minWork = 22`, `decayPeriod = 300 s`. Players are anonymous. Details are in
+[`docs/spec/claims.md`](../spec/claims.md).
 
 ## Consequences
 
-- Verification is one SHA-256 over 20 bytes plus a few integer comparisons, so it is safe to run
-  on every request.
+- Verification is one SHA-256 over 20 bytes, one `log2` and a comparison, so it is safe to run on
+  every request.
 - Stockpiling and GPU advantage are accepted and bounded by decay. Revisit with a challenge or a
   different hash if they hurt the game.
 - Parameters are config values and should be tuned after a real browser hash-rate benchmark.
