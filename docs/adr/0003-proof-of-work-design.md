@@ -12,47 +12,14 @@ verify on the server and fast enough to mine in a browser.
 
 ## Considered options
 
-**Decay**
-
-1. **Bits decay**: strength in bits, `256 - log2(hash)`, minus a fixed number of bits per period.
-   Linear decay in bits is exponential in work, since 1 bit is a factor of 2.
-   - Pros: retake cost halves every period, so even a huge proof is cheap again after a bounded
-     time. Hardware advantage is capped (1000x is only about 10 bits).
-   - Cons: protection grows only logarithmically with work.
-2. **Work decays** (strength in expected hashes, minus a fixed number of hashes per second)
-   - Pros: protection is proportional to effort.
-   - Cons: GPU owners can lock cells for a very long time.
-
-**Unit of work**
-
-1. **Actual hash value** (`256 - log2(hash)`, fractional): every hash counts for exactly its
-   value, so there are no factor-of-2 jumps between thresholds. Cons: float64 math.
-2. **Count of leading zero bits** (integer): integer-only math. Cons: work moves in factor-of-2
-   steps, and a lucky hash gets no credit beyond its last zero bit.
-
-**Hash function**
-
-1. **SHA-256**: native in Go, fast in browsers, verification costs about 1 µs.
-   Cons: GPUs are about 1000x faster than browsers.
-2. **Memory-hard (Argon2id)**: smaller GPU advantage. Cons: tens of hashes per second in a
-   browser (noisy solve times), and milliseconds of server CPU and memory per verification.
-
-**Replay protection**
-
-1. **Bind to cell, color and generation** (no server challenge): stateless, nothing to rotate.
-   Cons: proofs can be mined ahead of time.
-2. **Add a rotating server challenge**: limits stockpiling. Cons: a server secret, an extra endpoint
-   and expired work.
-
-**Claim time**
-
-1. **Chosen by the client and hashed**, checked only against the server clock (`ts <= now`):
-   the stored hash contains its own time, so a cell's history can be re-verified from stored
-   claims. Backdating only hurts the claimer. Cons: clients need server time.
-2. **Server time at receipt**: no client clock involved. Cons: the time is not part of the hash,
-   so stored claims cannot be re-verified on their own.
-
-**Decay shape**: continuous (`bits - elapsed / period`) or step (whole bits at each period).
+| Topic | Chosen | Rejected alternative |
+|-------|--------|----------------------|
+| Decay | **Bits decay**: strength in bits minus a fixed number of bits per period. This is exponential in work, so the retake cost halves every period and a 1000x hardware advantage is only about 10 bits. | **Work decays** (expected hashes minus a fixed rate): protection proportional to effort, but GPU owners could lock cells for a very long time. |
+| Unit of work | **Actual hash value**, `256 - log2(hash)` (fractional, float64): every hash counts for exactly its value. | **Count of leading zero bits** (integer): integer-only math, but factor-of-2 jumps and no credit for lucky hashes. |
+| Hash | **SHA-256**: native in Go, fast in browsers, about 1 µs to verify. GPUs are about 1000x faster. | **Argon2id**: smaller GPU advantage, but tens of hashes per second in browsers and milliseconds of server CPU and memory per verification. |
+| Replay | **Bind to cell, color and generation**: stateless. Proofs can be mined ahead of time. | **Rotating server challenge**: limits stockpiling, but needs a secret, an endpoint and expires work. |
+| Claim time | **Client-chosen `ts` in the hash**, only checked `ts <= server clock`: stored claims are verifiable on their own, and backdating only hurts the claimer. | **Server time at receipt**: no client clock, but the time is not in the hash. |
+| Decay shape | **Continuous**: `work - elapsed / period`. | **Steps**: whole bits at each period. |
 
 ## Decision
 
