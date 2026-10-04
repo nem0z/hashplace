@@ -1,0 +1,7 @@
+[
+  {"x": 0, "y": 0, "color": 0, "generation": 0, "nonce": "0", "preimage": "6870310000000000000000000000000000000000", "hash": "6b6c251b02d397af6c3d1e0574ff1b0e83b5dea0100e3a79430717be41165e1c", "work": 1},
+  {"x": 255, "y": 255, "color": 15, "generation": 4294967295, "nonce": "18446744073709551615", "preimage": "68703100ff00ff0fffffffffffffffffffffffff", "hash": "afa46053efde2c648c5d85488c8526d8661793337ea47944688e5822479195cd", "work": 0},
+  {"x": 12, "y": 34, "color": 5, "generation": 7, "nonce": "42", "preimage": "687031000c00220500000007000000000000002a", "hash": "c08265dad1c2ab37e61e789e445a9113cb1e32bd434852c41d082f752c8414d7", "work": 0},
+  {"x": 12, "y": 34, "color": 5, "generation": 7, "nonce": "6", "preimage": "687031000c002205000000070000000000000006", "hash": "00b1187b69a3ff6524ce589b84beaacc11a79a34d221606a318c55f953da1d87", "work": 8},
+  {"x": 12, "y": 34, "color": 5, "generation": 7, "nonce": "854669", "preimage": "687031000c0022050000000700000000000d0a8d", "hash": "00000244e6d6b80561452b475bd3d4bef4d1cb0fee5c9c3cbb6fb1dc518fca10", "work": 22}
+]
