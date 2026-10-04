@@ -4,6 +4,7 @@
 |----------|---------|
 | [workflow.md](workflow.md) | How work flows from idea to merged PR, and who does what |
 | [spec/claims.md](spec/claims.md) | Normative rules for claims, proof-of-work and decay |
+| [spec/api.md](spec/api.md) | Normative HTTP API and real-time events |
 | [adr/](adr/) | Architecture decision records |
 | [../AGENTS.md](../AGENTS.md) | Entry point for AI agents |
 | [../CONTRIBUTING.md](../CONTRIBUTING.md) | Branch, commit and PR standards |
