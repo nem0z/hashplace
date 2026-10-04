@@ -1,0 +1,13 @@
+version: 2
+# Add `gomod` (/backend) and `npm` (/frontend) entries in the scaffold PRs that create those folders.
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      # Dependabot appends ": " to the prefix, giving "ci (deps): bump ...".
+      prefix: ci (deps)
+    labels:
+      - type:chore
+      - area:infra
