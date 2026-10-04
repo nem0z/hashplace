@@ -119,3 +119,4 @@ Details (breaking changes, trailers) are in [`CONTRIBUTING.md`](CONTRIBUTING.md)
 | `open-pull-request`       | Your change is ready to be proposed.                     |
 | `address-review-feedback` | A PR you own received review comments.                   |
 | `write-adr`               | You are making or proposing an architectural decision.   |
+| `pow-protocol`            | You touch claims, proof-of-work or decay.                |
