@@ -36,6 +36,9 @@ jobs:
             agents
             deps
           requireScope: false
+          # Format: "type (scope): description". The space before "(scope)" is required.
+          headerPattern: '^(\w+)(?: \(([\w-]+)\))?!?: (.+)$'
+          headerPatternCorrespondence: type, scope, subject
           subjectPattern: ^(?![A-Z]).+[^.]$
           subjectPatternError: |
             The subject "{subject}" must start with a lower-case letter and must not end with a period.
