@@ -44,19 +44,28 @@ verify on the server and fast enough to mine in a browser.
 2. **Add a rotating server challenge**: limits stockpiling. Cons: a server secret, an extra endpoint
    and expired work.
 
+**Claim time**
+
+1. **Chosen by the client and hashed**, checked only against the server clock (`ts <= now`):
+   the stored hash contains its own time, so a cell's history can be re-verified from stored
+   claims. Backdating only hurts the claimer. Cons: clients need server time.
+2. **Server time at receipt**: no client clock involved. Cons: the time is not part of the hash,
+   so stored claims cannot be re-verified on their own.
+
 **Decay shape**: continuous (`bits - elapsed / period`) or step (whole bits at each period).
 
 ## Decision
 
-Bits decay, continuous, SHA-256, and proofs bound to cell, color and generation with no
-challenge. Work is the actual hash value expressed in bits (`256 - log2(hash)`, float64). The rule
-is `claimed_work - elapsed / decayPeriod < new_work`. Parameters: 256 x 256 canvas, 16 colors,
-`minWork = 22`, `decayPeriod = 300 s`. Players are anonymous. Details are in
+Bits decay, continuous, SHA-256, and proofs bound to cell, color, generation and a client-chosen
+`ts`, with no challenge. Work is the actual hash value expressed in bits (`256 - log2(hash)`,
+float64). The rule is `claimed_work - (new_ts - claimed_ts) / decayPeriod < new_work`, with
+elapsed time measured claim to claim and `new_ts <= server clock`. Parameters: 256 x 256 canvas,
+16 colors, `minWork = 22`, `decayPeriod = 300 s`. Players are anonymous. Details are in
 [`docs/spec/claims.md`](../spec/claims.md).
 
 ## Consequences
 
-- Verification is one SHA-256 over 20 bytes, one `log2` and a comparison, so it is safe to run on
+- Verification is one SHA-256 over 28 bytes, one `log2` and a comparison, so it is safe to run on
   every request.
 - Stockpiling and GPU advantage are accepted and bounded by decay. Revisit with a challenge or a
   different hash if they hurt the game.
