@@ -44,7 +44,7 @@ Open a regular PR, ready for review (not a draft).
 ```sh
 git push -u origin HEAD
 gh pr create --base main \
-  --title "<type>(<scope>): <summary>" \
+  --title "<type> (<scope>): <summary>" \
   --body-file <filled-template.md> \
   --label "<type:...>" --label "<area:...>"
 ```
@@ -52,8 +52,8 @@ gh pr create --base main \
 - Build the body from `.github/pull_request_template.md` and fill in **every** section. Write
   "None" or "N/A" rather than deleting a section.
 - The first line must be `Closes #<issue>`.
-- The title must be a Conventional Commit (CI enforces this): lower-case summary, imperative mood,
-  no trailing period.
+- The title must follow the commit standard (CI enforces this): `type (scope): description`, with
+  a space before `(scope)`, an action verb, lower case and no trailing period.
 
 ## 5. Wait for CI
 

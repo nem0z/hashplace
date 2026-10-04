@@ -40,7 +40,7 @@ If two comments conflict, ask.
 - Make **one commit per review comment**, or one per group of comments that ask for the same
   change. Each thread then maps to exactly one commit.
 - The commit message follows the commit standard in `CONTRIBUTING.md` and describes the change,
-  for example `fix(backend): reject negative coordinates in claim request`.
+  for example `fix (backend): reject negative coordinates in claim request`.
 - Push new commits on top of the branch, so the maintainer can see what changed since their last
   review.
 - Re-run the full checks for the touched areas before pushing.

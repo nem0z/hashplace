@@ -25,10 +25,11 @@ Examples: `feat/12-claim-endpoint`, `fix/31-decay-rounding`, `docs/4-pow-spec`.
 
 ## Commits
 
-Use [Conventional Commits](https://www.conventionalcommits.org/):
+Based on [Conventional Commits](https://www.conventionalcommits.org/), with **one space** between
+the type and the scope:
 
 ```text
-<type>(<scope>): <description>
+<type> (<scope>): <description>
 ```
 
 | Types | `feat`, `fix`, `perf`, `refactor`, `test`, `docs`, `build`, `ci`, `chore`, `revert` |
@@ -37,14 +38,15 @@ Use [Conventional Commits](https://www.conventionalcommits.org/):
 
 The description starts with an action verb in the imperative (`add`, `fix`, `remove`, ...), is
 lower case, has no trailing period and is at most 72 characters. Example:
-`feat(backend): add route to get current map`.
+`feat (backend): add route to get current map`.
 
-Breaking changes use `!` (`feat(protocol)!: bind proofs to cell generation`) and a
+Breaking changes use `!` (`feat (protocol)!: bind proofs to cell generation`) and a
 `BREAKING CHANGE:` footer. AI-authored commits keep the tool's `Co-authored-by` trailer.
 
 ## Pull requests
 
-- **Title** is a Conventional Commit. It becomes the squash-commit message on `main` (CI checks it).
+- **Title** follows the commit format above. It becomes the squash-commit message on `main`
+  (CI checks it).
 - **Body** follows the PR template. Link the issue with `Closes #<n>`.
 - **Size**: < 250 changed lines (excluding lockfiles and generated code). Break larger work down
   into smaller, stacked PRs.

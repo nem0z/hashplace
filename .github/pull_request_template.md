@@ -22,7 +22,7 @@ Closes #
 
 ## Checklist
 
-- [ ] Title is a Conventional Commit (`type(scope): summary`)
+- [ ] Title follows the commit standard (`type (scope): description`)
 - [ ] Scoped to a single issue; < 250 changed lines
 - [ ] Tests added or updated for the new behavior
 - [ ] `docs/spec/` updated if game/protocol rules changed
