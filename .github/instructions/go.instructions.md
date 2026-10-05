@@ -28,6 +28,16 @@ Add complexity only when the simple version does not work or the maintainer asks
 
 ## Code
 
+Follow `AGENTS.md` > Code style. In Go specifically:
+
+- Blank lines between blocks are enforced by the `wsl_v5` linter, configured to match
+  `AGENTS.md` > Code style. Fix its findings and never add `//nolint` for it. If a finding
+  conflicts with the style rules, change the linter settings instead.
+- Defaults are `const` declarations at the top of the package that owns them
+  (`const defaultAddr = ":8080"`), never literals inside functions.
+- Goroutines: `go func() { errChan <- srv.ListenAndServe() }()` is fine on one line; anything
+  longer goes in a named function (`go worker(ctx, jobs)`).
+- Shared HTTP behavior (for example the `Hashplace-Now` header) is a middleware wrapping the mux.
 - `context.Context` is the first parameter of anything that does I/O or may block. Never store
   it in a struct.
 - Errors: wrap only with context the **current** function owns: what *it* was doing and with
@@ -38,8 +48,10 @@ Add complexity only when the simple version does not work or the maintainer asks
   with `errors.Is` and `errors.As`. Handle an error once: log it **or** return it, not both.
 - No panics outside `main` startup and genuine programmer errors.
 - No mutable package-level state. Configuration is a struct populated in `main` from flags or env.
-- **Time and randomness are injected** (for example `now func() time.Time` and an `io.Reader` for
-  randomness). This is mandatory for anything involving decay, challenges or expiry.
+- **Inject time only where logic depends on it.** Pass a clock (`now func() time.Time`) to code
+  whose behavior depends on time: claim checks, decay, expiry. Code that only reports the time
+  (for example the `Hashplace-Now` header) calls `time.Now()` directly. Randomness that affects
+  behavior is injected as an `io.Reader`.
 - Concurrency: a mutex is owned by the type it protects and documented next to the field. Every
   goroutine has a clear owner and a stop path (context cancellation). No goroutine leaks.
 - HTTP: set server timeouts, cap bodies with `http.MaxBytesReader`, validate every field

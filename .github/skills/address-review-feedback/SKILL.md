@@ -61,7 +61,18 @@ mutation($id:ID!){ resolveReviewThread(input:{threadId:$id}){ thread{ isResolved
 Leave a thread unresolved only when you need a decision from the maintainer (a disagreement or an
 open question). Say so explicitly in your reply.
 
-## 5. Hand back
+## 5. Turn general feedback into rules
+
+If a maintainer comment expresses a preference that applies beyond this PR (naming, formatting,
+structure, API style), make sure future work follows it without being told again:
+
+1. Prefer enforcing it with a tool (a linter rule, a formatter setting) in the current PR when
+   the PR already owns that config.
+2. Otherwise, propose the rule in the matching standards file (`AGENTS.md` > Code style,
+   `.github/instructions/*.instructions.md` or `CONTRIBUTING.md`) in a separate small PR.
+3. Mention the new rule or linter in your thread reply.
+
+## 6. Hand back
 
 Post one short summary comment ("Round N addressed: ...") listing what changed and what is
 still open for discussion. Then stop and wait for the maintainer.
