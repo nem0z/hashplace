@@ -8,20 +8,21 @@ This document is **normative**. Game rules are in [`claims.md`](claims.md).
 
 - Base path: `/api`. The frontend is served from the same origin, so there is no CORS.
 - Bodies are JSON (`application/json`) unless stated otherwise.
-- Times are Unix seconds (integer). `nonce` is a **decimal string**, because JavaScript numbers
-  cannot hold every uint64. `hash` is a lowercase hex string, or `null` for an empty cell.
+- Times are Unix seconds (integer). `nonce` is a JSON number: any uint64 is valid. Clients that
+  cannot represent every uint64 (JavaScript, for example) simply mine a smaller range. `hash` is a
+  lowercase hex string, or `null` for an empty cell.
 - Every JSON response includes `now`, the server time, so clients can keep a clock offset for
   their claim `ts`.
 
 A **cell** object, here after the claim from the test vectors (`nonce` `379950`) was accepted:
 
 ```json
-{"x": 12, "y": 34, "color": 5, "generation": 8, "ts": 1791072000, "nonce": "379950",
+{"x": 12, "y": 34, "color": 5, "generation": 8, "ts": 1791072000, "nonce": 379950,
  "hash": "000003c1cbaa62e83cfe7944167cf47907cf7df799854dac9e15fece848fb48b",
  "work": 22.09041353104493}
 ```
 
-An empty cell has `generation` `0`, `ts` `0`, `nonce` `"0"`, `hash` `null` and `work` `0`.
+An empty cell has `generation` `0`, `ts` `0`, `nonce` `0`, `hash` `null` and `work` `0`.
 
 ## Endpoints
 
@@ -49,7 +50,7 @@ The full state of one cell, which is what a client needs to start mining it.
 ### `POST /api/claims`
 
 ```json
-{"x": 12, "y": 34, "color": 5, "generation": 7, "ts": 1791072000, "nonce": "379950"}
+{"x": 12, "y": 34, "color": 5, "generation": 7, "ts": 1791072000, "nonce": 379950}
 ```
 
 The body is limited to 1 KiB. The server checks the claim as described in
