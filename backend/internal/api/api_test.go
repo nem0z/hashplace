@@ -3,7 +3,9 @@ package api_test
 import (
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"testing"
+	"time"
 
 	"github.com/nem0z/hashplace/backend/internal/api"
 )
@@ -35,5 +37,34 @@ func TestHealthzRejectsOtherMethods(t *testing.T) {
 
 	if rec.Code != http.StatusMethodNotAllowed {
 		t.Errorf("status = %d, want %d", rec.Code, http.StatusMethodNotAllowed)
+	}
+}
+
+func TestServerClockHeader(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name   string
+		method string
+		path   string
+	}{
+		{name: "ok", method: http.MethodGet, path: "/healthz"},
+		{name: "method not allowed", method: http.MethodPost, path: "/healthz"},
+		{name: "not found", method: http.MethodGet, path: "/missing"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			rec := httptest.NewRecorder()
+			api.NewHandler().ServeHTTP(rec, httptest.NewRequestWithContext(t.Context(), tt.method, tt.path, nil))
+
+			header := rec.Header().Get("Hashplace-Now")
+
+			got, err := strconv.ParseInt(header, 10, 64)
+			if err != nil || time.Since(time.Unix(got, 0)).Abs() > 5*time.Second {
+				t.Errorf("Hashplace-Now = %q, want Unix seconds within 5s of now", header)
+			}
+		})
 	}
 }
