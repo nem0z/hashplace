@@ -33,8 +33,8 @@ Follow `AGENTS.md` > Code style. In Go specifically:
 - Blank lines between blocks are enforced by the `wsl_v5` linter. Fix its findings; never disable it.
 - Defaults are `const` declarations at the top of the package that owns them
   (`const defaultAddr = ":8080"`), never literals inside functions.
-- Start goroutines on named functions: `go serve(srv, errChan)`, not `go func() { ... }()` with a
-  multi-line body.
+- Goroutines: `go func() { errChan <- srv.ListenAndServe() }()` is fine on one line; anything
+  longer goes in a named function (`go worker(ctx, jobs)`).
 - Shared HTTP behavior (for example the `Hashplace-Now` header) is a middleware wrapping the mux.
 - `context.Context` is the first parameter of anything that does I/O or may block. Never store
   it in a struct.

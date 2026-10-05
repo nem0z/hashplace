@@ -30,8 +30,9 @@ These rules come from maintainer reviews. Apply them everywhere, not only where 
 
 - **Descriptive names.** No cryptic abbreviations: `errChan`, not `errc`. Short idiomatic names
   (`err`, `ctx`, `i`) are fine in small scopes.
-- **Named functions over inline bodies.** Do not inline goroutine bodies or long closures inside
-  another function; extract a small named function.
+- **Inline only one-liners.** A closure or goroutine body that fits on one line stays inline
+  (`go func() { errChan <- srv.ListenAndServe() }()`). If it is more than one line, extract a
+  small named function.
 - **Blank lines between logical blocks.** Separate a statement group from the next `if`, `for`,
   `switch`, `return`, `defer` or `go` with a blank line, and leave a blank line after a closing
   `}`. Only keep an `if` directly under the assignment it checks.
