@@ -2,6 +2,7 @@
 package config
 
 import (
+	"cmp"
 	"fmt"
 	"net"
 	"strconv"
@@ -17,11 +18,7 @@ type Config struct {
 
 // Load reads the configuration from getenv (usually os.Getenv) and validates it.
 func Load(getenv func(string) string) (Config, error) {
-	cfg := Config{Addr: getenv("HASHPLACE_ADDR")}
-	if cfg.Addr == "" {
-		cfg.Addr = defaultAddr
-	}
-
+	cfg := Config{Addr: cmp.Or(getenv("HASHPLACE_ADDR"), defaultAddr)}
 	if err := validateAddr(cfg.Addr); err != nil {
 		return Config{}, fmt.Errorf("invalid HASHPLACE_ADDR %q: %w", cfg.Addr, err)
 	}

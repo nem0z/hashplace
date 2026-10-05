@@ -3,7 +3,6 @@ package main
 
 import (
 	"context"
-	"errors"
 	"log/slog"
 	"net/http"
 	"os"
@@ -43,11 +42,10 @@ func run(logger *slog.Logger) error {
 	case err := <-errChan:
 		return err
 	case <-ctx.Done():
+		logger.Info("server shutting down")
 	}
 
-	logger.Info("server shutting down")
-
-	return shutdown(srv, errChan)
+	return shutdown(srv)
 }
 
 func newServer(cfg config.Config) *http.Server {
@@ -60,7 +58,6 @@ func newServer(cfg config.Config) *http.Server {
 	}
 }
 
-// start runs srv in the background. The returned channel receives the error that stopped it.
 func start(srv *http.Server) <-chan error {
 	errChan := make(chan error, 1)
 	go func() { errChan <- srv.ListenAndServe() }()
@@ -68,18 +65,9 @@ func start(srv *http.Server) <-chan error {
 	return errChan
 }
 
-// shutdown stops srv gracefully and waits for it to return.
-func shutdown(srv *http.Server, errChan <-chan error) error {
+func shutdown(srv *http.Server) error {
 	ctx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
 	defer cancel()
 
-	if err := srv.Shutdown(ctx); err != nil {
-		return err
-	}
-
-	if err := <-errChan; !errors.Is(err, http.ErrServerClosed) {
-		return err
-	}
-
-	return nil
+	return srv.Shutdown(ctx)
 }
