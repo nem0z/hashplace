@@ -17,8 +17,7 @@ func NewHandler(now func() time.Time) http.Handler {
 	return withServerClock(mux, now)
 }
 
-// withServerClock sets the Hashplace-Now header (Unix seconds) on every response, so
-// clients can keep a clock offset for their claim timestamps.
+// withServerClock sets the Hashplace-Now header (Unix seconds) on every response.
 func withServerClock(next http.Handler, now func() time.Time) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Hashplace-Now", strconv.FormatInt(now().Unix(), 10))
