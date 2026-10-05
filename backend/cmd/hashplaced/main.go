@@ -42,12 +42,12 @@ func run(logger *slog.Logger) error {
 		IdleTimeout:  60 * time.Second,
 	}
 
-	errc := make(chan error, 1)
-	go func() { errc <- srv.ListenAndServe() }()
+	errChan := make(chan error, 1)
+	go func() { errChan <- srv.ListenAndServe() }()
 	logger.Info("server started", "addr", cfg.Addr)
 
 	select {
-	case err := <-errc:
+	case err := <-errChan:
 		return err
 	case <-ctx.Done():
 	}
@@ -58,7 +58,7 @@ func run(logger *slog.Logger) error {
 	if err := srv.Shutdown(shutdownCtx); err != nil {
 		return err
 	}
-	if err := <-errc; !errors.Is(err, http.ErrServerClosed) {
+	if err := <-errChan; !errors.Is(err, http.ErrServerClosed) {
 		return err
 	}
 	return nil
