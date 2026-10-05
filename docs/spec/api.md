@@ -63,9 +63,10 @@ The body is limited to 1 KiB. The server checks the claim as described in
 | 400 | `out_of_range` | `x`, `y` or `color` out of range |
 | 422 | `future_timestamp` | `ts` is after the server clock |
 | 422 | `work_too_low` | Work below `minWork` |
-| 422 | `claim_too_weak` | Work does not beat the current claim |
+| 422 | `claim_too_weak` | Work does not beat the current claim. The body also contains the current `cell`, so the miner can see what it has to beat |
 
-Error bodies are `{"error": "<code>", "now": ...}`. Codes are stable and machine-readable.
+Error bodies are `{"error": "<code>", "now": ...}`, plus `cell` for `claim_too_weak`. Codes are
+stable and machine-readable.
 
 ### `GET /api/events`
 
