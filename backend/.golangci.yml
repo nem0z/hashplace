@@ -15,6 +15,11 @@ linters:
     - staticcheck
     - unused
     - wsl_v5
+  settings:
+    wsl_v5:
+      # A return may sit directly under the assignment of the value it returns.
+      disable:
+        - return
 
 formatters:
   enable:

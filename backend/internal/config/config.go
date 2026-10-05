@@ -36,6 +36,5 @@ func validateAddr(addr string) error {
 	}
 
 	_, err = strconv.ParseUint(port, 10, 16)
-
 	return err
 }
