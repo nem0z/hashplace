@@ -51,7 +51,7 @@ func run(logger *slog.Logger) error {
 func newServer(cfg config.Config) *http.Server {
 	return &http.Server{
 		Addr:         cfg.Addr,
-		Handler:      api.NewHandler(),
+		Handler:      api.NewHandler(time.Now),
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
 		IdleTimeout:  60 * time.Second,
