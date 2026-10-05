@@ -156,4 +156,5 @@ verifier and the browser miner must both pass them, comparing `work` with a tole
   all once that time arrives. A pre-mined proof stays usable as long as it beats the cell's
   current claim.
 - **State loss**: proofs are not bound to a canvas instance. If cell state is lost, old proofs
-  become valid again. Persistence must keep the current claim of every cell.
+  become valid again. Every accepted claim is therefore stored durably before it is acknowledged
+  (see [ADR 0005](../adr/0005-persistence.md)).
