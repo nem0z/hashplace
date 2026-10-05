@@ -7,6 +7,8 @@ import (
 	"strconv"
 )
 
+const defaultAddr = ":8080"
+
 // Config holds the server settings.
 type Config struct {
 	// Addr is the TCP address the HTTP server listens on, for example ":8080".
@@ -17,7 +19,7 @@ type Config struct {
 func Load(getenv func(string) string) (Config, error) {
 	cfg := Config{Addr: getenv("HASHPLACE_ADDR")}
 	if cfg.Addr == "" {
-		cfg.Addr = ":8080"
+		cfg.Addr = defaultAddr
 	}
 
 	if err := validateAddr(cfg.Addr); err != nil {
