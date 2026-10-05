@@ -11,8 +11,8 @@ This document is **normative**. Game rules are in [`claims.md`](claims.md).
 - Times are Unix seconds (integer). `nonce` is a JSON number: any uint64 is valid. Clients that
   cannot represent every uint64 (JavaScript, for example) simply mine a smaller range. `hash` is a
   lowercase hex string, or `null` for an empty cell.
-- Every JSON response includes `now`, the server time, so clients can keep a clock offset for
-  their claim `ts`.
+- Every response has a `Hashplace-Now` header with the server time (Unix seconds), so clients can
+  keep a clock offset for their claim `ts`. The server sets it in one place for all responses.
 
 A **cell** object, here after the claim from the test vectors (`nonce` `9620748`) was accepted:
 
@@ -42,10 +42,10 @@ The color of `(x, y)` is at byte `y * 256 + x`.
 The full state of one cell, which is what a client needs to start mining it.
 
 ```json
-{"cell": { ... }, "now": 1791072000}
+{"cell": { ... }}
 ```
 
-`404 {"error": "out_of_range", "now": ...}` if the coordinates are outside the canvas.
+`404 {"error": "out_of_range"}` if the coordinates are outside the canvas.
 
 ### `POST /api/claims`
 
@@ -58,15 +58,15 @@ The body is limited to 1 KiB. The server checks the claim as described in
 
 | Status | `error` | Meaning |
 |--------|---------|---------|
-| 200 | - | Accepted. Body: `{"cell": { ... }, "now": ...}` with the updated cell |
+| 200 | - | Accepted. Body: `{"cell": { ... }}` with the updated cell |
 | 400 | `invalid_request` | Malformed JSON, missing or invalid field, body too large |
 | 400 | `out_of_range` | `x`, `y` or `color` out of range |
 | 422 | `future_timestamp` | `ts` is after the server clock |
 | 422 | `work_too_low` | Work below `minWork` |
 | 422 | `claim_too_weak` | Work does not beat the current claim. The body also contains the current `cell`, so the miner can see what it has to beat |
 
-Error bodies are `{"error": "<code>", "now": ...}`, plus `cell` for `claim_too_weak`. Codes are
-stable and machine-readable.
+Error bodies are `{"error": "<code>"}`, plus `cell` for `claim_too_weak`. Codes are stable and
+machine-readable.
 
 ### `GET /api/events`
 
@@ -74,7 +74,7 @@ A Server-Sent Events stream (`text/event-stream`).
 
 | Event | `data` | When |
 |-------|--------|------|
-| `cell` | `{"cell": { ... }, "now": ...}` | After every accepted claim |
+| `cell` | `{"cell": { ... }, "now": ...}` | After every accepted claim. `now` is in the data because headers are only sent once, when the stream opens |
 
 Events have no `id` and there is no replay. A client that reconnects reloads the canvas.
 

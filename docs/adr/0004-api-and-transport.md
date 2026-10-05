@@ -16,7 +16,7 @@ want the simplest design that works with the Go standard library.
 |-------|--------|-----------------------|
 | Real-time | **Server-Sent Events** for server-to-client updates, plain `POST` for claims: standard library only, browsers reconnect automatically. | **WebSocket**: two-way, but needs a third-party library and manual reconnection. **Polling**: laggy and wasteful. |
 | Canvas load | **Colors-only snapshot** (65,536 bytes) plus `GET /api/cells/{x}/{y}` on demand: small for every visitor, and full details only for the cell being mined. | **Full JSON snapshot** (about 4 MB). **Full binary snapshot** (about 1.4 MB, custom decoder). |
-| Server time | **`now` in every response and event**, plus `GET /api/time`. | **HTTP `Date` header**: not available on stream events. |
+| Server time | **`Hashplace-Now` header on every response**, set by one middleware (it covers the binary canvas too), `now` in SSE event data, plus `GET /api/time`. | **`now` field in every JSON body**: each handler has to add it, and the binary canvas cannot carry it. **HTTP `Date` header**: a date string that proxies or caches may rewrite. |
 | Nonce encoding | **JSON number** (any uint64): the rule does not depend on client technology. Clients that cannot represent every uint64 mine a smaller range. | **Decimal or hex string**: exact in every language, but not a natural JSON type for a number. |
 | Event replay | **None**: a reconnecting client reloads the 64 KB snapshot. | **Event ids with a replay buffer**: more server state for little gain. |
 
