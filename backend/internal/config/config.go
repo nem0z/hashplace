@@ -35,10 +35,7 @@ func validateAddr(addr string) error {
 		return err
 	}
 
-	n, err := strconv.Atoi(port)
-	if err != nil || n < 0 || n > 65535 {
-		return fmt.Errorf("port %q must be a number between 0 and 65535", port)
-	}
+	_, err = strconv.ParseUint(port, 10, 16)
 
-	return nil
+	return err
 }

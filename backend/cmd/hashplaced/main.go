@@ -69,7 +69,6 @@ func run(logger *slog.Logger) error {
 	return nil
 }
 
-// serve runs srv until it stops and sends the result to errChan.
 func serve(srv *http.Server, errChan chan<- error) {
 	errChan <- srv.ListenAndServe()
 }

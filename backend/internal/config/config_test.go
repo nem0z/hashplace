@@ -27,16 +27,8 @@ func TestLoad(t *testing.T) {
 			t.Parallel()
 
 			got, err := config.Load(func(key string) string { return tt.env[key] })
-			if tt.wantErr {
-				if err == nil {
-					t.Fatalf("Load() = %+v, want error", got)
-				}
-
-				return
-			}
-
-			if err != nil {
-				t.Fatalf("Load() error = %v", err)
+			if (err != nil) != tt.wantErr {
+				t.Fatalf("Load() error = %v, wantErr %v", err, tt.wantErr)
 			}
 
 			if got != tt.want {
