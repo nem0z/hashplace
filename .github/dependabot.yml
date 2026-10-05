@@ -1,5 +1,5 @@
 version: 2
-# Add `gomod` (/backend) and `npm` (/frontend) entries in the scaffold PRs that create those folders.
+# Add the `npm` (/frontend) entry in the scaffold PR that creates that folder.
 updates:
   - package-ecosystem: github-actions
     directory: /
@@ -11,3 +11,12 @@ updates:
     labels:
       - type:chore
       - area:infra
+  - package-ecosystem: gomod
+    directory: /backend
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: build (deps)
+    labels:
+      - type:chore
+      - area:backend

@@ -1,0 +1,27 @@
+version: "2"
+
+linters:
+  enable:
+    - bodyclose
+    - errcheck
+    - errorlint
+    - gocritic
+    - gosec
+    - govet
+    - ineffassign
+    - misspell
+    - noctx
+    - revive
+    - staticcheck
+    - unused
+    - wsl_v5
+  settings:
+    wsl_v5:
+      # A return may sit directly under the assignment of the value it returns.
+      disable:
+        - return
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
