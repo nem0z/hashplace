@@ -75,7 +75,6 @@ A Server-Sent Events stream (`text/event-stream`).
 | Event | `data` | When |
 |-------|--------|------|
 | `cell` | `{"cell": { ... }, "now": ...}` | After every accepted claim |
-| `time` | `{"now": ...}` | Every 15 seconds (heartbeat and clock sync) |
 
 Events have no `id` and there is no replay. A client that reconnects reloads the canvas.
 
