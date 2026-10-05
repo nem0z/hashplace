@@ -44,6 +44,7 @@ func run(logger *slog.Logger) error {
 
 	errChan := make(chan error, 1)
 	go serve(srv, errChan)
+
 	logger.Info("server started", "addr", cfg.Addr)
 
 	select {
@@ -53,14 +54,18 @@ func run(logger *slog.Logger) error {
 	}
 
 	logger.Info("server shutting down")
+
 	shutdownCtx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
 	defer cancel()
+
 	if err := srv.Shutdown(shutdownCtx); err != nil {
 		return err
 	}
+
 	if err := <-errChan; !errors.Is(err, http.ErrServerClosed) {
 		return err
 	}
+
 	return nil
 }
 

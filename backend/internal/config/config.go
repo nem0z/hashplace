@@ -19,9 +19,11 @@ func Load(getenv func(string) string) (Config, error) {
 	if cfg.Addr == "" {
 		cfg.Addr = ":8080"
 	}
+
 	if err := validateAddr(cfg.Addr); err != nil {
 		return Config{}, fmt.Errorf("invalid HASHPLACE_ADDR %q: %w", cfg.Addr, err)
 	}
+
 	return cfg, nil
 }
 
@@ -30,9 +32,11 @@ func validateAddr(addr string) error {
 	if err != nil {
 		return err
 	}
+
 	n, err := strconv.Atoi(port)
 	if err != nil || n < 0 || n > 65535 {
 		return fmt.Errorf("port %q must be a number between 0 and 65535", port)
 	}
+
 	return nil
 }

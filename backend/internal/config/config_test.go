@@ -31,11 +31,14 @@ func TestLoad(t *testing.T) {
 				if err == nil {
 					t.Fatalf("Load() = %+v, want error", got)
 				}
+
 				return
 			}
+
 			if err != nil {
 				t.Fatalf("Load() error = %v", err)
 			}
+
 			if got != tt.want {
 				t.Errorf("Load() = %+v, want %+v", got, tt.want)
 			}
