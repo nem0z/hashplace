@@ -43,7 +43,7 @@ func run(logger *slog.Logger) error {
 	}
 
 	errChan := make(chan error, 1)
-	go serve(srv, errChan)
+	go func() { errChan <- srv.ListenAndServe() }()
 
 	logger.Info("server started", "addr", cfg.Addr)
 
@@ -67,8 +67,4 @@ func run(logger *slog.Logger) error {
 	}
 
 	return nil
-}
-
-func serve(srv *http.Server, errChan chan<- error) {
-	errChan <- srv.ListenAndServe()
 }
