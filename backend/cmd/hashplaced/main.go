@@ -34,16 +34,8 @@ func run(logger *slog.Logger) error {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
-	srv := &http.Server{
-		Addr:         cfg.Addr,
-		Handler:      api.NewHandler(),
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 10 * time.Second,
-		IdleTimeout:  60 * time.Second,
-	}
-
-	errChan := make(chan error, 1)
-	go func() { errChan <- srv.ListenAndServe() }()
+	srv := newServer(cfg)
+	errChan := start(srv)
 
 	logger.Info("server started", "addr", cfg.Addr)
 
@@ -55,10 +47,33 @@ func run(logger *slog.Logger) error {
 
 	logger.Info("server shutting down")
 
-	shutdownCtx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
+	return shutdown(srv, errChan)
+}
+
+func newServer(cfg config.Config) *http.Server {
+	return &http.Server{
+		Addr:         cfg.Addr,
+		Handler:      api.NewHandler(),
+		ReadTimeout:  5 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  60 * time.Second,
+	}
+}
+
+// start runs srv in the background. The returned channel receives the error that stopped it.
+func start(srv *http.Server) <-chan error {
+	errChan := make(chan error, 1)
+	go func() { errChan <- srv.ListenAndServe() }()
+
+	return errChan
+}
+
+// shutdown stops srv gracefully and waits for it to return.
+func shutdown(srv *http.Server, errChan <-chan error) error {
+	ctx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
 	defer cancel()
 
-	if err := srv.Shutdown(shutdownCtx); err != nil {
+	if err := srv.Shutdown(ctx); err != nil {
 		return err
 	}
 
