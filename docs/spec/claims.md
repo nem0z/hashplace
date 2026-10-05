@@ -21,7 +21,6 @@ Each cell stores:
 | `color` | palette index (uint8) | `0` (white) |
 | `ts` | timestamp of the current claim, chosen by the claimer, Unix seconds (int64) | `0` |
 | `nonce` | nonce of the current claim (uint64) | `0` |
-| `generation` | number of accepted claims on this cell (uint32) | `0` |
 | `hash` | hash of the current claim (32 bytes) | none |
 | `work` | work of `hash` (float64, `0..256`) | `0` |
 
@@ -37,10 +36,9 @@ preimage = "hp1"                3 bytes, ASCII
         || uint16be(x)          2 bytes
         || uint16be(y)          2 bytes
         || uint8(color)         1 byte
-        || uint32be(generation) 4 bytes
         || int64be(ts)          8 bytes
         || uint64be(nonce)      8 bytes
-                                = 28 bytes
+                                = 24 bytes
 hash = SHA-256(preimage)
 H    = hash read as a 256-bit unsigned big-endian integer
 work = 256 - log2(H)            (256 if H = 0)
@@ -50,12 +48,11 @@ Work is measured in **bits** from the actual value of the hash, so it is fractio
 the hash, the more work. A hash with `work >= w` takes `2^w` attempts on average, so each extra
 bit doubles the expected work. Work is computed in IEEE 754 float64.
 
-The proof is bound to the cell, the color, the cell's current `generation` and its own `ts`. Once
-any claim is accepted on the cell, its generation changes and every other proof for that cell
-becomes invalid. Proofs cannot be replayed or reused on another cell or color.
+The proof is bound to the cell, the color and its own `ts`, so it cannot be reused on another cell
+or color. It is not bound to the cell's current state: a proof wins against whatever claim is
+stored when it arrives, as long as it beats it (section 3).
 
-There is no server challenge: proofs never expire while the cell is untouched, so players may
-mine ahead of time.
+There is no server challenge: proofs never expire, so players may mine ahead of time.
 
 ## 3. Claim rule
 
@@ -71,24 +68,29 @@ A claim's strength decays linearly in bits, so the work needed to retake it halv
 strength(t) = work - (t - ts) / decayPeriod
 ```
 
-A claim `(x, y, color, generation, ts, nonce)` with work `w`, processed when the server clock
-reads `now`, is **accepted** if and only if:
+A claim `(x, y, color, ts, nonce)` with work `w`, processed when the server clock reads `now`, is
+**accepted** if and only if:
 
 1. `x`, `y` and `color` are in range,
-2. `generation == cell.generation`,
-3. `ts <= now` (no claims from the future),
-4. `w >= minWork`,
-5. `w > strength(ts)` of the stored claim, evaluated in float64 as
+2. `ts <= now` (no claims from the future),
+3. `w >= minWork`,
+4. `w > strength(ts)` of the stored claim, evaluated in float64 as
    `(cell.work - w) * decayPeriod < ts - cell.ts`.
 
 Elapsed time is measured **claim to claim**, from the stored claim's `ts` to the new claim's
-`ts`. The server clock is only used for check 3.
+`ts`. The server clock is only used for check 2.
 
 On acceptance, atomically for the cell:
 
 ```text
-color = color, ts = ts, nonce = nonce, hash = hash, work = w, generation = generation + 1
+color = color, ts = ts, nonce = nonce, hash = hash, work = w
 ```
+
+**Replays are impossible.** Check 4 is equivalent to
+`w - ts / decayPeriod > cell.work - cell.ts / decayPeriod`: every claim has a score
+`work - ts / decayPeriod`, and a new claim must have a strictly higher score than the cell's.
+A cell's score therefore only goes up, so a proof that was already accepted, or already beaten,
+can never be accepted again.
 
 Consequences:
 
@@ -150,7 +152,8 @@ verifier and the browser miner must both pass them, comparing `work` with a tole
 
 - **Hardware advantage**: a GPU hashes about 1000x faster than a browser (about 10 bits). With
   decay this buys about 50 extra minutes of protection, not permanent ownership.
-- **Stockpiling**: players can pre-mine proofs for untouched cells, using a future `ts`, and submit
-  them all once that time arrives.
-- **State loss**: proofs are not bound to a canvas instance. If cell state is lost and generations
-  restart at 0, old proofs become valid again. Persistence must keep generations.
+- **Stockpiling**: players can pre-mine proofs for any cell, using a future `ts`, and submit them
+  all once that time arrives. A pre-mined proof stays usable as long as it beats the cell's
+  current claim.
+- **State loss**: proofs are not bound to a canvas instance. If cell state is lost, old proofs
+  become valid again. Persistence must keep the current claim of every cell.
