@@ -3,19 +3,18 @@ package api_test
 import (
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"testing"
 	"time"
 
 	"github.com/nem0z/hashplace/backend/internal/api"
 )
 
-func fixedNow() time.Time { return time.Unix(1791072000, 0) }
-
 func TestHealthz(t *testing.T) {
 	t.Parallel()
 
 	rec := httptest.NewRecorder()
-	api.NewHandler(fixedNow).ServeHTTP(rec, httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/healthz", nil))
+	api.NewHandler().ServeHTTP(rec, httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/healthz", nil))
 
 	if rec.Code != http.StatusOK {
 		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
@@ -34,7 +33,7 @@ func TestHealthzRejectsOtherMethods(t *testing.T) {
 	t.Parallel()
 
 	rec := httptest.NewRecorder()
-	api.NewHandler(fixedNow).ServeHTTP(rec, httptest.NewRequestWithContext(t.Context(), http.MethodPost, "/healthz", nil))
+	api.NewHandler().ServeHTTP(rec, httptest.NewRequestWithContext(t.Context(), http.MethodPost, "/healthz", nil))
 
 	if rec.Code != http.StatusMethodNotAllowed {
 		t.Errorf("status = %d, want %d", rec.Code, http.StatusMethodNotAllowed)
@@ -58,10 +57,13 @@ func TestServerClockHeader(t *testing.T) {
 			t.Parallel()
 
 			rec := httptest.NewRecorder()
-			api.NewHandler(fixedNow).ServeHTTP(rec, httptest.NewRequestWithContext(t.Context(), tt.method, tt.path, nil))
+			api.NewHandler().ServeHTTP(rec, httptest.NewRequestWithContext(t.Context(), tt.method, tt.path, nil))
 
-			if got := rec.Header().Get("Hashplace-Now"); got != "1791072000" {
-				t.Errorf("Hashplace-Now = %q, want 1791072000", got)
+			header := rec.Header().Get("Hashplace-Now")
+
+			got, err := strconv.ParseInt(header, 10, 64)
+			if err != nil || time.Since(time.Unix(got, 0)).Abs() > 5*time.Second {
+				t.Errorf("Hashplace-Now = %q, want Unix seconds within 5s of now", header)
 			}
 		})
 	}
