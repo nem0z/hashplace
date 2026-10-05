@@ -48,8 +48,10 @@ Follow `AGENTS.md` > Code style. In Go specifically:
   with `errors.Is` and `errors.As`. Handle an error once: log it **or** return it, not both.
 - No panics outside `main` startup and genuine programmer errors.
 - No mutable package-level state. Configuration is a struct populated in `main` from flags or env.
-- **Time and randomness are injected** (for example `now func() time.Time` and an `io.Reader` for
-  randomness). This is mandatory for anything involving decay, challenges or expiry.
+- **Inject time only where logic depends on it.** Pass a clock (`now func() time.Time`) to code
+  whose behavior depends on time: claim checks, decay, expiry. Code that only reports the time
+  (for example the `Hashplace-Now` header) calls `time.Now()` directly. Randomness that affects
+  behavior is injected as an `io.Reader`.
 - Concurrency: a mutex is owned by the type it protects and documented next to the field. Every
   goroutine has a clear owner and a stop path (context cancellation). No goroutine leaks.
 - HTTP: set server timeouts, cap bodies with `http.MaxBytesReader`, validate every field
