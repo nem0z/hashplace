@@ -24,6 +24,21 @@ that renders the canvas and mines proofs in a Web Worker.
 - Reuse the standard library and existing code before adding dependencies or new patterns.
 - When two options are equally simple, pick the one that is easier to read.
 
+## Code style (all languages)
+
+These rules come from maintainer reviews. Apply them everywhere, not only where they were raised.
+
+- **Descriptive names.** No cryptic abbreviations: `errChan`, not `errc`. Short idiomatic names
+  (`err`, `ctx`, `i`) are fine in small scopes.
+- **Named functions over inline bodies.** Do not inline goroutine bodies or long closures inside
+  another function; extract a small named function.
+- **Blank lines between logical blocks.** Separate a statement group from the next `if`, `for`,
+  `switch`, `return`, `defer` or `go` with a blank line, and leave a blank line after a closing
+  `}`. Only keep an `if` directly under the assignment it checks.
+- **No magic values.** Defaults and tunables are named constants, defined in one place.
+- **Cross-cutting concerns in one place.** Anything every request or response needs (headers,
+  clock, logging, limits) lives in one middleware or helper, never repeated per handler.
+
 ## Non-negotiable rules
 
 1. **Never push to `main`, never merge a PR, never approve a PR.** Only the maintainer (@nem0z)

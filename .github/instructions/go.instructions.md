@@ -28,6 +28,14 @@ Add complexity only when the simple version does not work or the maintainer asks
 
 ## Code
 
+Follow `AGENTS.md` > Code style. In Go specifically:
+
+- Blank lines between blocks are enforced by the `wsl_v5` linter. Fix its findings; never disable it.
+- Defaults are `const` declarations at the top of the package that owns them
+  (`const defaultAddr = ":8080"`), never literals inside functions.
+- Start goroutines on named functions: `go serve(srv, errChan)`, not `go func() { ... }()` with a
+  multi-line body.
+- Shared HTTP behavior (for example the `Hashplace-Now` header) is a middleware wrapping the mux.
 - `context.Context` is the first parameter of anything that does I/O or may block. Never store
   it in a struct.
 - Errors: wrap only with context the **current** function owns: what *it* was doing and with
