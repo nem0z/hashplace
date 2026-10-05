@@ -12,11 +12,11 @@ summarizes it. If the two disagree, the spec wins: report the mismatch.
 
 A proof is a client-chosen `ts` (Unix seconds) and `nonce`. `work = 256 - log2(H)` in bits
 (float64), where `H` is the value of
-`SHA-256("hp1" || x || y || color || generation || ts || nonce)` (28 bytes, big-endian) read as a
-256-bit integer. Work is **not** the count of leading zero bits. A claim with work `w` wins a cell
-if `ts <= server clock`, `w >= 22` and `(cell.work - w) * 300 < ts - cell.ts`. Elapsed time is
+`SHA-256("hp1" || x || y || color || ts || nonce)` (24 bytes, big-endian) read as a 256-bit
+integer. Work is **not** the count of leading zero bits. A claim with work `w` wins a cell if
+`ts <= server clock`, `w >= 22` and `(cell.work - w) * 300 < ts - cell.ts`. Elapsed time is
 measured claim to claim. On success the cell stores the new claim (color, `ts`, nonce, hash,
-work), and `generation` goes up by one.
+work). Proofs are not bound to the cell's state: the rule alone rejects replays.
 
 ## Invariants
 
@@ -26,8 +26,8 @@ work), and `generation` goes up by one.
    exactly as written in the spec.
 3. The preimage encoding is byte-exact. Go and TypeScript both pass
    `docs/spec/vectors/pow-v1.json`.
-4. Accepting a claim and updating the cell is atomic per cell. With two valid claims for the same
-   generation, exactly one wins.
+4. Checking a claim and updating the cell is atomic per cell: claims on the same cell are applied
+   one at a time, each against the state left by the previous one.
 5. Decay is computed from the stored `(work, ts)` and the new claim's `ts`. Nothing rewrites cells
    in the background. The server clock is injected so tests can control it.
 

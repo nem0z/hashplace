@@ -14,15 +14,15 @@ This document is **normative**. Game rules are in [`claims.md`](claims.md).
 - Every JSON response includes `now`, the server time, so clients can keep a clock offset for
   their claim `ts`.
 
-A **cell** object, here after the claim from the test vectors (`nonce` `379950`) was accepted:
+A **cell** object, here after the claim from the test vectors (`nonce` `9620748`) was accepted:
 
 ```json
-{"x": 12, "y": 34, "color": 5, "generation": 8, "ts": 1791072000, "nonce": 379950,
- "hash": "000003c1cbaa62e83cfe7944167cf47907cf7df799854dac9e15fece848fb48b",
- "work": 22.09041353104493}
+{"x": 12, "y": 34, "color": 5, "ts": 1791072000, "nonce": 9620748,
+ "hash": "000002b3b357ccc62fe5625cbc469abaec00ed5b43380c2a519e66ef73544c96",
+ "work": 22.56599618898906}
 ```
 
-An empty cell has `generation` `0`, `ts` `0`, `nonce` `0`, `hash` `null` and `work` `0`.
+An empty cell has `ts` `0`, `nonce` `0`, `hash` `null` and `work` `0`.
 
 ## Endpoints
 
@@ -50,7 +50,7 @@ The full state of one cell, which is what a client needs to start mining it.
 ### `POST /api/claims`
 
 ```json
-{"x": 12, "y": 34, "color": 5, "generation": 7, "ts": 1791072000, "nonce": 379950}
+{"x": 12, "y": 34, "color": 5, "ts": 1791072000, "nonce": 9620748}
 ```
 
 The body is limited to 1 KiB. The server checks the claim as described in
@@ -61,7 +61,6 @@ The body is limited to 1 KiB. The server checks the claim as described in
 | 200 | - | Accepted. Body: `{"cell": { ... }, "now": ...}` with the updated cell |
 | 400 | `invalid_request` | Malformed JSON, missing or invalid field, body too large |
 | 400 | `out_of_range` | `x`, `y` or `color` out of range |
-| 409 | `stale_generation` | Someone claimed the cell first. Fetch the cell and mine again |
 | 422 | `future_timestamp` | `ts` is after the server clock |
 | 422 | `work_too_low` | Work below `minWork` |
 | 422 | `claim_too_weak` | Work does not beat the current claim |
