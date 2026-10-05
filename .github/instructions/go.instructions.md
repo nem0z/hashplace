@@ -30,7 +30,9 @@ Add complexity only when the simple version does not work or the maintainer asks
 
 Follow `AGENTS.md` > Code style. In Go specifically:
 
-- Blank lines between blocks are enforced by the `wsl_v5` linter. Fix its findings; never disable it.
+- Blank lines between blocks are enforced by the `wsl_v5` linter, configured to match
+  `AGENTS.md` > Code style. Fix its findings and never add `//nolint` for it. If a finding
+  conflicts with the style rules, change the linter settings instead.
 - Defaults are `const` declarations at the top of the package that owns them
   (`const defaultAddr = ":8080"`), never literals inside functions.
 - Goroutines: `go func() { errChan <- srv.ListenAndServe() }()` is fine on one line; anything

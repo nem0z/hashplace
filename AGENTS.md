@@ -35,7 +35,11 @@ These rules come from maintainer reviews. Apply them everywhere, not only where 
   small named function.
 - **Blank lines between logical blocks.** Separate a statement group from the next `if`, `for`,
   `switch`, `return`, `defer` or `go` with a blank line, and leave a blank line after a closing
-  `}`. Only keep an `if` directly under the assignment it checks.
+  `}`. Exceptions: an `if` directly under the assignment it checks, and a `return` directly
+  under the assignment of the value it returns (`_, err = parse(s)` then `return err`).
+- **Small functions with one job.** When a function does several steps (for example load config,
+  start a server, shut it down), split it into one function per step and keep the caller as
+  simple wiring.
 - **No magic values.** Defaults and tunables are named constants, defined in one place.
 - **Cross-cutting concerns in one place.** Anything every request or response needs (headers,
   clock, logging, limits) lives in one middleware or helper, never repeated per handler.
